@@ -1,4 +1,4 @@
-/* The example of BASE64 Encord/Decord
+/* The example of BASE64 Encode/Decode
  *
  * This sample code is in the public domain.
  */
