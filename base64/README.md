@@ -1,4 +1,4 @@
-# BASE64 Encode/Decord example
+# BASE64 Encode/Decord
 
 ```
 I (0) cpu_start: Starting scheduler on APP CPU.
