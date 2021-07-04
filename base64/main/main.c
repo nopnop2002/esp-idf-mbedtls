@@ -48,7 +48,7 @@ void app_main()
 		while(1) { vTaskDelay(1); }
 	}
 
-	// Encord to Base64
+	// Encode to Base64
 	size_t encord_len;
 	//int ret = mbedtls_base64_encode(encord_buffer, EncodedSize, &encord_len, src_buffer, sizeof(src_buffer));
 	int ret = mbedtls_base64_encode(encord_buffer, EncodedSize+1, &encord_len, src_buffer, sizeof(src_buffer));
@@ -57,19 +57,19 @@ void app_main()
 		while(1) { vTaskDelay(1); }
 	}
 
-	// Decord from Base64
-	unsigned char decord_buffer[64];
-	size_t decord_len;
-	ESP_LOGI(TAG, "encord_len=%d", encord_len);
+	// Decode from Base64
+	unsigned char decode_buffer[64];
+	size_t decode_len;
+	ESP_LOGI(TAG, "encode_len=%d", encord_len);
 	ESP_LOG_BUFFER_HEXDUMP(TAG, encord_buffer, encord_len, ESP_LOG_INFO);
 
-	ret = mbedtls_base64_decode( decord_buffer, sizeof(decord_buffer), &decord_len, encord_buffer, encord_len);
+	ret = mbedtls_base64_decode( decode_buffer, sizeof(decode_buffer), &decode_len, encord_buffer, encord_len);
 	if (ret != 0) {
-		ESP_LOGE(TAG, "Error in mbedtls decord! ret = -0x%x", -ret);
+		ESP_LOGE(TAG, "Error in mbedtls decode! ret = -0x%x", -ret);
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(TAG, "decord_len=%d", decord_len);
-	ESP_LOG_BUFFER_HEXDUMP(TAG, decord_buffer, decord_len, ESP_LOG_INFO);
+	ESP_LOGI(TAG, "decode_len=%d", decode_len);
+	ESP_LOG_BUFFER_HEXDUMP(TAG, decode_buffer, decode_len, ESP_LOG_INFO);
 
 	if (encord_buffer != NULL) free(encord_buffer);
 }
