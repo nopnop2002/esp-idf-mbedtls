@@ -1,6 +1,10 @@
 # Generate md5 digest from a string
 
 esp-idf contains md5 functions that are different from mbedtls.   
+- esp_rom_md5_init   
+- esp_rom_md5_update   
+- esp_rom_md5_final   
+
 Here is the demo code.   
 
 ```
