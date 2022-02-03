@@ -10,6 +10,7 @@ I referred [this](https://tls.mbed.org/kb/how-to/encrypt-with-aes-cbc).
 
 
 # AES-CFB128   
+AES-CFB128 encryption or decryption operation.   
 ```
 I (0) CFB128: mbedtls_ctr_drbg_seed ok
 I (0) CFB128: mbedtls_ctr_drbg_random ok
@@ -27,6 +28,7 @@ I (90) CFB128: 0x3ffb7c76   30 31                                             |0
 
 
 # AES-CBC   
+AES-CBC encryption or decryption operation on full blocks.   
 This must be a multiple of the block size(16*n Bytes).
 ```
 I (0) CBC: mbedtls_ctr_drbg_seed ok
