@@ -1,4 +1,4 @@
-# performs an AES-CFB128 encryption & decryption
+# AES-CFB128 encryption & decryption
 
 I referred [this](https://tls.mbed.org/kb/how-to/encrypt-with-aes-cbc).   
 
