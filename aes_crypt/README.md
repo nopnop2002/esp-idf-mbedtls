@@ -29,7 +29,7 @@ I (90) CFB128: 0x3ffb7c76   30 31                                             |0
 
 # AES-CBC   
 AES-CBC encryption or decryption operation on full blocks.   
-This must be a multiple of the block size(16*n Bytes).
+This must be a multiple of the block size (16*n Bytes).
 ```
 I (0) CBC: mbedtls_ctr_drbg_seed ok
 I (0) CBC: mbedtls_ctr_drbg_random ok
@@ -47,7 +47,7 @@ I (90) CBC: 0x3ffb7c76   30 31 32 33 34 35 36 37  38 39 3a 3b 3c 3d 3e 3f  |0123
 
 
 # AES-ECB   
-AES single-block encryption or decryption.   
+AES single-block (16 Bytes) encryption or decryption.   
 ```
 I (0) ECB: mbedtls_ctr_drbg_seed ok
 I (0) ECB: mbedtls_ctr_drbg_random ok
