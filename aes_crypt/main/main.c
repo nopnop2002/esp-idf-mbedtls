@@ -47,9 +47,10 @@ void aes_cfb128(void *pvParameters)
 	// Generate AES key
 	// The AES key is a random bit string of appropriate length.
 	// A 128-bit AES key requires 16 bytes.
+	// A 192-bit AES key requires 24 bytes.
 	// A 256-bit AES key requires 32 bytes. 
-	unsigned char key[16];
-	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 16 );
+	unsigned char key[32];
+	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 32 );
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random failed %d", ret);
 	} else {
@@ -122,9 +123,10 @@ void aes_cbc(void *pvParameters)
 	// Generate AES key
 	// The AES key is a random bit string of appropriate length.
 	// A 128-bit AES key requires 16 bytes.
+	// A 192-bit AES key requires 24 bytes.
 	// A 256-bit AES key requires 32 bytes. 
-	unsigned char key[16];
-	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 16 );
+	unsigned char key[32];
+	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 32 );
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random failed %d", ret);
 	} else {
@@ -197,9 +199,10 @@ void aes_ecb(void *pvParameters)
 	// Generate AES key
 	// The AES key is a random bit string of appropriate length.
 	// A 128-bit AES key requires 16 bytes.
+	// A 192-bit AES key requires 24 bytes.
 	// A 256-bit AES key requires 32 bytes. 
-	unsigned char key[16];
-	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 16 );
+	unsigned char key[32];
+	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 32 );
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random failed %d", ret);
 	} else {
