@@ -24,6 +24,11 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
+#define mbedtls_md5_ret mbedtls_md5
+#endif
+
+
 static const char *TAG = "mbedtls";
 
 void app_main()
