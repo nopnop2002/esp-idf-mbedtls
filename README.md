@@ -1,7 +1,7 @@
 # esp-idf-mbedtls
 Example of mbedtls for ESP-IDF.
 
-ESP-IDF includes [this](https://tls.mbed.org/) Mbed TLS library (Version 2.16.9).   
+ESP-IDF includes [this](https://tls.mbed.org/) Mbed TLS library.   
 You can use TLS components as standard.   
 However, there is no sample code in esp-idf.   
 So i ported from [here](https://github.com/ARMmbed/mbedtls/tree/development/programs/hash).
