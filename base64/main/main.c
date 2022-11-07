@@ -65,7 +65,7 @@ void app_main()
 	unsigned char* decode_buffer = NULL;
 	decode_buffer = malloc(DecodedSize);
 	if (decode_buffer == NULL) {
-		ESP_LOGE(TAG, "malloc fail. decode_buffer %"PRIi32, EncodedSize);
+		ESP_LOGE(TAG, "malloc fail. decode_buffer %"PRIi32, DecodedSize);
 		while(1) { vTaskDelay(1); }
 	}
 
