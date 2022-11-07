@@ -4,6 +4,7 @@
  */
 
 #include <stdio.h>
+#include <inttypes.h>
 #include <mbedtls/base64.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -34,7 +35,7 @@ void app_main()
 
 	// Calculate the size after conversion to base64
 	int32_t EncodedSize = calcBase64EncodedSize(sizeof(src_buffer));
-	ESP_LOGI(TAG, "EncodedSize=%d", EncodedSize);
+	ESP_LOGI(TAG, "EncodedSize=%"PRIi32, EncodedSize);
 
 	// Allocate encode memory
 	unsigned char* encode_buffer = NULL;
@@ -42,7 +43,7 @@ void app_main()
 	// Must be +1
 	encode_buffer = malloc(EncodedSize+1);
 	if (encode_buffer == NULL) {
-		ESP_LOGE(TAG, "malloc fail. encode_buffer %d", EncodedSize);
+		ESP_LOGE(TAG, "malloc fail. encode_buffer %"PRIi32, EncodedSize);
 		while(1) { vTaskDelay(1); }
 	}
 
@@ -58,13 +59,13 @@ void app_main()
 
 	// Calculate the size after conversion from base64
 	int32_t DecodedSize = calcBase64DecodedSize(EncodedSize);
-	ESP_LOGI(TAG, "DecodedSize=%d", DecodedSize);
+	ESP_LOGI(TAG, "DecodedSize=%"PRIi32, DecodedSize);
 
 	// Allocate decode memory
 	unsigned char* decode_buffer = NULL;
 	decode_buffer = malloc(DecodedSize);
 	if (decode_buffer == NULL) {
-		ESP_LOGE(TAG, "malloc fail. decode_buffer %d", EncodedSize);
+		ESP_LOGE(TAG, "malloc fail. decode_buffer %"PRIi32, EncodedSize);
 		while(1) { vTaskDelay(1); }
 	}
 
