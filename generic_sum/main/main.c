@@ -58,6 +58,35 @@ static int generic_print( const mbedtls_md_info_t *md_info, char *filename )
 	return( 0 );
 }
 
+void doPrint(char * md_string, mbedtls_md_type_t md_type) {
+	const mbedtls_md_info_t *md_info;
+	ESP_LOGI(TAG, "md_type=%s", md_string);
+	//md_info = mbedtls_md_info_from_type( MBEDTLS_MD_MD5 );
+	//md_info = mbedtls_md_info_from_type( MBEDTLS_MD_SHA1 );
+	//md_info = mbedtls_md_info_from_type( MBEDTLS_MD_SHA256 );
+	md_info = mbedtls_md_info_from_type( md_type );
+	if (md_info == NULL) {
+		ESP_LOGE(TAG, "mbedtls_md_info_from_type fail");
+		vTaskDelete(NULL);
+	}
+
+	//DIR* dir = opendir(path);
+	DIR* dir = opendir("/spiffs/");
+	assert(dir != NULL);
+	while (true) {
+		struct dirent*pe = readdir(dir);
+		if (!pe) break;
+		ESP_LOGD(TAG, "d_name=%s d_ino=%d d_type=%x", pe->d_name, pe->d_ino, pe->d_type);
+		char filename[64];
+		// there is a total limit of 32 chars for filenames
+		sprintf(filename, "/spiffs/%.32s", pe->d_name);
+		ESP_LOGD(TAG, "filename=[%s]", filename);
+
+		generic_print( md_info, filename );
+	}
+	closedir(dir);
+}
+
 void app_main()
 {
 	ESP_LOGI(TAG, "Initializing SPIFFS");
@@ -95,29 +124,7 @@ void app_main()
 		list++;
 	}
 
-	char md_name[100];
-	memset( md_name, 0x00, 100 );
-	//md_info = mbedtls_md_info_from_type( MBEDTLS_MD_MD5 );
-	//md_info = mbedtls_md_info_from_type( MBEDTLS_MD_SHA1 );
-	md_info = mbedtls_md_info_from_type( MBEDTLS_MD_SHA256 );
-	if (md_info == NULL) {
-		ESP_LOGE(TAG, "mbedtls_md_info_from_type fail");
-		vTaskDelete(NULL);
-	}
-
-	//DIR* dir = opendir(path);
-	DIR* dir = opendir("/spiffs/");
-	assert(dir != NULL);
-	while (true) {
-		struct dirent*pe = readdir(dir);
-		if (!pe) break;
-		ESP_LOGD(TAG, "d_name=%s d_ino=%d d_type=%x", pe->d_name, pe->d_ino, pe->d_type);
-		char filename[64];
-		// there is a total limit of 32 chars for filenames 
-		sprintf(filename, "/spiffs/%.32s", pe->d_name);
-		ESP_LOGD(TAG, "filename=[%s]", filename);
-
-		generic_print( md_info, filename );
-	}
-	closedir(dir);
+	doPrint("MBEDTLS_MD_MD5", MBEDTLS_MD_MD5);
+	doPrint("MBEDTLS_MD_SHA1", MBEDTLS_MD_SHA1);
+	doPrint("MBEDTLS_MD_SHA256", MBEDTLS_MD_SHA256);
 }
