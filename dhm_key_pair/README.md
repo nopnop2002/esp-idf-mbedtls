@@ -1,4 +1,4 @@
-# Generate DHM public/secret key pare Example
+# Generate DHM public/secret key pare
 
 ```
 I (322) main_task: Started on CPU0
