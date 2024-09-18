@@ -100,10 +100,10 @@ void app_main()
 		ESP_LOGI(TAG, "mbedtls_dhm_read_params ok");
 	}
 
-#define PUB_KEY_LEN 128
+#define PUBLIC_KEY_LEN 128
 
 	// creates a DHM key pair and exports the raw public key in big-endian format.
-	uint8_t self_public_key[PUB_KEY_LEN];
+	uint8_t self_public_key[PUBLIC_KEY_LEN];
 	ret = mbedtls_dhm_make_public(&dhm, x_size, self_public_key, x_size, my_random, NULL);
 	if (ret != 0) {
 		ESP_LOGE(TAG, "mbedtls_dhm_make_public failed %d", ret);
@@ -113,20 +113,20 @@ void app_main()
 	}
 	ESP_LOG_BUFFER_HEXDUMP(TAG, self_public_key, x_size, ESP_LOG_INFO);
 
-#define SHARE_KEY_LEN 128
+#define SECRET_KEY_LEN 128
 
 	// derives and exports the shared secret (G^Y)^X mod P.
-	uint8_t  share_key[SHARE_KEY_LEN];
-	size_t	 share_len;
-	ret = mbedtls_dhm_calc_secret(&dhm, share_key, SHARE_KEY_LEN, &share_len, my_random, NULL);
+	uint8_t  secret_key[SECRET_KEY_LEN];
+	size_t	 secret_len;
+	ret = mbedtls_dhm_calc_secret(&dhm, secret_key, SECRET_KEY_LEN, &secret_len, my_random, NULL);
 	if (ret != 0) {
 		ESP_LOGE(TAG, "mbedtls_dhm_calc_secret failed %d", ret);
 		while(1) { vTaskDelay(100); }
 	} else {
 		ESP_LOGI(TAG, "mbedtls_dhm_calc_secret ok");
 	}
-	ESP_LOGI(TAG, "share_len=%d", share_len);
-	ESP_LOG_BUFFER_HEXDUMP(TAG, share_key, share_len, ESP_LOG_INFO);
+	ESP_LOGI(TAG, "secret_len=%d", secret_len);
+	ESP_LOG_BUFFER_HEXDUMP(TAG, secret_key, secret_len, ESP_LOG_INFO);
 
 	mbedtls_dhm_init(&dhm);
 }
