@@ -29,56 +29,56 @@ int32_t calcBase64DecodedSize(int input_length)
 
 void app_main()
 {
-	unsigned char src_buffer[32];
-	for(int i=0;i<sizeof(src_buffer);i++) src_buffer[i] = i;
-	ESP_LOG_BUFFER_HEXDUMP(TAG, src_buffer, sizeof(src_buffer), ESP_LOG_INFO);
+	unsigned char srcBuffer[32];
+	for(int i=0;i<sizeof(srcBuffer);i++) srcBuffer[i] = i;
+	ESP_LOG_BUFFER_HEXDUMP(TAG, srcBuffer, sizeof(srcBuffer), ESP_LOG_INFO);
 
 	// Calculate the size after conversion to base64
-	int32_t EncodedSize = calcBase64EncodedSize(sizeof(src_buffer));
-	ESP_LOGI(TAG, "EncodedSize=%"PRIi32, EncodedSize);
+	int32_t encodeCalcSize = calcBase64EncodedSize(sizeof(srcBuffer));
+	ESP_LOGI(TAG, "encodeCalcSize=%"PRIi32, encodeCalcSize);
 
 	// Allocate encode memory
-	unsigned char* encode_buffer = NULL;
-	// encode is null-terminated.
+	unsigned char* encodeBuffer = NULL;
+	// encode is null terminated.
 	// Must be +1
-	encode_buffer = malloc(EncodedSize+1);
-	if (encode_buffer == NULL) {
-		ESP_LOGE(TAG, "malloc fail. encode_buffer %"PRIi32, EncodedSize);
+	encodeBuffer = malloc(encodeCalcSize+1);
+	if (encodeBuffer == NULL) {
+		ESP_LOGE(TAG, "malloc fail. encodeBuffer %"PRIi32, encodeCalcSize);
 		while(1) { vTaskDelay(1); }
 	}
 
 	// Encode to Base64
-	size_t encode_len;
-	int ret = mbedtls_base64_encode(encode_buffer, EncodedSize+1, &encode_len, src_buffer, sizeof(src_buffer));
+	size_t encodeRealSize;
+	int ret = mbedtls_base64_encode(encodeBuffer, encodeCalcSize+1, &encodeRealSize, srcBuffer, sizeof(srcBuffer));
 	if (ret != 0) {
 		ESP_LOGE(TAG, "Error in mbedtls encode! ret = -0x%x", -ret);
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(TAG, "encode_len=%d", encode_len);
-	ESP_LOG_BUFFER_HEXDUMP(TAG, encode_buffer, encode_len, ESP_LOG_INFO);
+	ESP_LOGI(TAG, "encodeRealSize=%d", encodeRealSize);
+	ESP_LOG_BUFFER_HEXDUMP(TAG, encodeBuffer, encodeRealSize, ESP_LOG_INFO);
 
 	// Calculate the size after conversion from base64
-	int32_t DecodedSize = calcBase64DecodedSize(EncodedSize);
-	ESP_LOGI(TAG, "DecodedSize=%"PRIi32, DecodedSize);
+	int32_t decodeCalcSize = calcBase64DecodedSize(encodeCalcSize);
+	ESP_LOGI(TAG, "decodeCalcSize=%"PRIi32, decodeCalcSize);
 
 	// Allocate decode memory
-	unsigned char* decode_buffer = NULL;
-	decode_buffer = malloc(DecodedSize);
-	if (decode_buffer == NULL) {
-		ESP_LOGE(TAG, "malloc fail. decode_buffer %"PRIi32, DecodedSize);
+	unsigned char* decodeBuffer = NULL;
+	decodeBuffer = malloc(decodeCalcSize);
+	if (decodeBuffer == NULL) {
+		ESP_LOGE(TAG, "malloc fail. decodeBuffer %"PRIi32, decodeCalcSize);
 		while(1) { vTaskDelay(1); }
 	}
 
 	// Decode from Base64
-	size_t decode_len;
-	ret = mbedtls_base64_decode( decode_buffer, DecodedSize, &decode_len, encode_buffer, encode_len);
+	size_t decodeRealSize;
+	ret = mbedtls_base64_decode( decodeBuffer, decodeCalcSize, &decodeRealSize, encodeBuffer, encodeRealSize);
 	if (ret != 0) {
 		ESP_LOGE(TAG, "Error in mbedtls decode! ret = -0x%x", -ret);
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(TAG, "decode_len=%d", decode_len);
-	ESP_LOG_BUFFER_HEXDUMP(TAG, decode_buffer, decode_len, ESP_LOG_INFO);
+	ESP_LOGI(TAG, "decodeRealSize=%d", decodeRealSize);
+	ESP_LOG_BUFFER_HEXDUMP(TAG, decodeBuffer, decodeRealSize, ESP_LOG_INFO);
 
-	if (encode_buffer != NULL) free(encode_buffer);
-	if (decode_buffer != NULL) free(decode_buffer);
+	if (encodeBuffer != NULL) free(encodeBuffer);
+	if (decodeBuffer != NULL) free(decodeBuffer);
 }
