@@ -36,10 +36,10 @@ void aes_cfb128(void *pvParameters)
 
 	// sets up the CTR_DRBG entropy source for future reseeds.
 	const char * seed = "some random seed string";
-	ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
-				(const unsigned char *)seed, strlen(seed));
+	ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, (const unsigned char *)seed, strlen(seed));
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed ok");
 	}
@@ -53,6 +53,7 @@ void aes_cfb128(void *pvParameters)
 	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 32 );
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random ok");
 	}
@@ -77,6 +78,7 @@ void aes_cfb128(void *pvParameters)
 	ret = mbedtls_aes_crypt_cfb128(&aes, MBEDTLS_AES_ENCRYPT, crypt_len, &iv_offset, iv, input, output);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_aes_crypt_cfb128(MBEDTLS_AES_ENCRYPT) failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_aes_crypt_cfb128(MBEDTLS_AES_ENCRYPT) ok");
 	}
@@ -89,6 +91,7 @@ void aes_cfb128(void *pvParameters)
 	ret = mbedtls_aes_crypt_cfb128(&aes, MBEDTLS_AES_DECRYPT, crypt_len, &iv_offset, iv, output, input);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_aes_crypt_cfb128(MBEDTLS_AES_DECRYPT) failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_aes_crypt_cfb128(MBEDTLS_AES_DECRYPT) ok");
 	}
@@ -112,10 +115,10 @@ void aes_cbc(void *pvParameters)
 
 	// sets up the CTR_DRBG entropy source for future reseeds.
 	const char * seed = "some random seed string";
-	ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
-				(const unsigned char *)seed, strlen(seed));
+	ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, (const unsigned char *)seed, strlen(seed));
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed ok");
 	}
@@ -129,6 +132,7 @@ void aes_cbc(void *pvParameters)
 	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 32 );
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random ok");
 	}
@@ -153,6 +157,7 @@ void aes_cbc(void *pvParameters)
 	ret = mbedtls_aes_crypt_cbc(&aes, MBEDTLS_AES_ENCRYPT, crypt_len, iv, input, output);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_aes_crypt_cbc(MBEDTLS_AES_ENCRYPT) failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_aes_crypt_cbc(MBEDTLS_AES_ENCRYPT) ok");
 	}
@@ -164,6 +169,7 @@ void aes_cbc(void *pvParameters)
 	ret = mbedtls_aes_crypt_cbc(&aes, MBEDTLS_AES_DECRYPT, crypt_len, iv, output, input);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_aes_crypt_cbc(MBEDTLS_AES_DECRYPT) failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_aes_crypt_cbc(MBEDTLS_AES_DECRYPT) ok");
 	}
@@ -188,10 +194,10 @@ void aes_ecb(void *pvParameters)
 
 	// sets up the CTR_DRBG entropy source for future reseeds.
 	const char * seed = "some random seed string";
-	ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
-				(const unsigned char *)seed, strlen(seed));
+	ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, (const unsigned char *)seed, strlen(seed));
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed ok");
 	}
@@ -205,6 +211,7 @@ void aes_ecb(void *pvParameters)
 	ret = mbedtls_ctr_drbg_random( &ctr_drbg, key, 32 );
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_ctr_drbg_random ok");
 	}
@@ -225,6 +232,7 @@ void aes_ecb(void *pvParameters)
 	ret = mbedtls_aes_crypt_ecb(&aes, MBEDTLS_AES_ENCRYPT, input, output);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_aes_crypt_ecb(MBEDTLS_AES_ENCRYPT) failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_aes_crypt_ecb(MBEDTLS_AES_ENCRYPT) ok");
 	}
@@ -235,6 +243,7 @@ void aes_ecb(void *pvParameters)
 	ret = mbedtls_aes_crypt_ecb(&aes, MBEDTLS_AES_DECRYPT, output, input);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_aes_crypt_ecb(MBEDTLS_AES_DECRYPT) failed %d", ret);
+		vTaskDelete(NULL);
 	} else {
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_aes_crypt_ecb(MBEDTLS_AES_DECRYPT) ok");
 	}
