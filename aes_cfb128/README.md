@@ -13,6 +13,8 @@ AES-CBC/AES-ECB has a limit on the size of data that can be encrypted.
 	Data of any size can be encrypted.   
 
 As you can see from this output, if the SEED string is changed, the encryption result will change.   
+To decrypt it, you need to use not only the encryption key but also the same SEED string.   
+If the encryption and decryption SEED strings are different, decryption will not be possible.   
 ```
 I (312) MAIN: seed=[seed string]
 I (312) MAIN: 0x3ffb3e60   d9 3b 4b 5a b2 df 8d 55  69 12 b0                 |.;KZ...Ui..|
