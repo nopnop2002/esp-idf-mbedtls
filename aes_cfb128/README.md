@@ -9,10 +9,11 @@ AES-CBC/AES-ECB has a limit on the size of data that can be encrypted.
 - AES-ECB   
 	AES single-block (16 Bytes) encryption or decryption.   
 - AES-CFB128   
-	AES-CFB128 uses a 128-bit (16-Bytes) key.   
-	This project uses MD5 to generate the key.   
 	AES-CFB128 has no limit on the size of data to be encrypted.   
 	Data of any size can be encrypted.   
+
+AES-CFB128 uses a 128-bit (16-Bytes) key.   
+This project uses MD5 to generate the key.   
 
 As you can see from this output, when the shared secret key changes, the encryption result changes too.   
 To decrypt, you must use the same shared secret key.   
