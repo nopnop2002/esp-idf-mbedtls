@@ -17,10 +17,10 @@ To decrypt it, you need to use not only the encryption key but also the same SEE
 If the encryption and decryption SEED strings are different, decryption will not be possible.   
 ```
 I (312) MAIN: seed=[seed string]
-I (312) MAIN: 0x3ffb3e60   d9 3b 4b 5a b2 df 8d 55  69 12 b0                 |.;KZ...Ui..| <--- encrypted data
+I (312) MAIN: 0x3ffb3e60   d9 3b 4b 5a b2 df 8d 55  69 12 b0                 |.;KZ...Ui..| <--- encrypted data using seed string
 I (322) MAIN: 0x3ffb3de0   68 65 6c 6c 6f 20 77 6f  72 6c 64                 |hello world|
 I (322) MAIN: seed2=[seed string2]
-I (332) MAIN: 0x3ffb3e60   76 85 9e cb f3 b1 17 41  8f 4e 4a                 |v......A.NJ| <--- encrypted data
+I (332) MAIN: 0x3ffb3e60   76 85 9e cb f3 b1 17 41  8f 4e 4a                 |v......A.NJ| <--- encrypted data using seed2 string
 I (342) MAIN: 0x3ffb3de0   68 65 6c 6c 6f 20 77 6f  72 6c 64                 |hello world|
 ```
 
