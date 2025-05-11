@@ -114,11 +114,11 @@ void app_main()
 
 	unsigned char input [128];
 	unsigned char output[128];
-	memset(output, 0x00, sizeof(output));
 	strcpy((char *)input, "hello world");
 	int crypt_len = strlen((char *)input);
 
 	// performs an AES-CFB128 encryption operation.
+	memset(output, 0x00, sizeof(output));
 	ESP_ERROR_CHECK(aes_cfb128(ENCRYPTION, input, crypt_len, output, sharedKey1));
 	ESP_LOG_BUFFER_HEXDUMP(TAG, output, crypt_len, ESP_LOG_INFO);
 
@@ -132,6 +132,7 @@ void app_main()
 	generateSharedKey("shared secret key2", sharedKey2);
 
 	// performs an AES-CFB128 encryption operation.
+	memset(output, 0x00, sizeof(output));
 	ESP_ERROR_CHECK(aes_cfb128(ENCRYPTION, input, crypt_len, output, sharedKey2));
 	ESP_LOG_BUFFER_HEXDUMP(TAG, output, crypt_len, ESP_LOG_INFO);
 
