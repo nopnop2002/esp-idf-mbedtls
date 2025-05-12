@@ -1,23 +1,21 @@
 menu "AES Configuration"
 
-	choice CRYPTION
-		prompt "Select Cryption"
-		default IAES_CFB128
+	config AES_CFB128
+		bool "Using AES_CFB128 encryption"
+		default false
 		help
-			Select Cryption.
-		config AES_CFB128
-			bool "AES-CFB128 encryption"
-			help
-				AES-CFB128 encryption.
-		config AES_CBC
-			bool "AES-CBC encryption"
-			help
-				AES-CBC encryption.
-		config AES_ECB
-			bool "AES ECB encryption"
-			help
-				AES ECB encryption.
-	endchoice
+			Using AES_CFB128 encryption.
 
+	config AES_CBC
+		bool "Using AES_CBC encryption"
+		default false
+		help
+			Using AES_CBC encryption.
+
+	config AES_ECB
+		bool "Using AES_ECB encryption"
+		default false
+		help
+			Using AES_ECB encryption.
 
 endmenu

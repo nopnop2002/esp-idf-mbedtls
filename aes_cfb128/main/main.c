@@ -30,25 +30,6 @@ esp_err_t aes_cfb128(int request, unsigned char *input, int crypt_len, unsigned 
 {
 	int ret;
 
-#if 0
-	// AES don't use seed 
-	mbedtls_entropy_context entropy;
-	mbedtls_entropy_init( &entropy );
-
-	mbedtls_ctr_drbg_context ctr_drbg;
-	mbedtls_ctr_drbg_init( &ctr_drbg );
-
-	// sets up the CTR_DRBG entropy source for future reseeds.
-	const char * seed = "seed string";
-	ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, (const unsigned char *)seed, strlen(seed));
-	if (ret != 0) {
-		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed failed %d", ret);
-		return ESP_FAIL;
-	} else {
-		ESP_LOGD(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed ok");
-	}
-#endif
-
 	// initializes the specified AES context.
 	mbedtls_aes_context aes;
 	mbedtls_aes_init(&aes);
