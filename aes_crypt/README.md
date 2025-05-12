@@ -44,7 +44,7 @@ I (503) aes_cbc: 0x3ffb3bf2   30 31 32 33 34 35 36 37  38 39 3a 3b 3c 3d 3e 3f  
 
 
 # AES-ECB   
-AES single-block (16 Bytes) encryption or decryption.   
+AES-ECB single-block (16 Bytes) encryption or decryption.   
 ```
 I (513) aes_ecb: mbedtls_aes_crypt_ecb(MBEDTLS_AES_ENCRYPT) ok
 I (523) aes_ecb: 0x3ffb3cb2   80 e1 89 e4 d1 f0 3f 98  48 12 0f 26 a5 b6 40 8d  |......?.H..&..@.|
