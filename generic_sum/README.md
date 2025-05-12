@@ -1,6 +1,6 @@
 # Generate message digest from file
 
-I ported from [here](https://github.com/ARMmbed/mbedtls/blob/development/programs/hash/generic_sum.c).
+I ported from [here](https://github.com/Mbed-TLS/mbedtls/tree/v3.6.3/programs/hash).
 
 # Available message digests:
 ```
