@@ -30,6 +30,8 @@ esp_err_t aes_cfb128(int request, unsigned char *input, int crypt_len, unsigned 
 {
 	int ret;
 
+#if 0
+	// AES don't use seed 
 	mbedtls_entropy_context entropy;
 	mbedtls_entropy_init( &entropy );
 
@@ -45,6 +47,7 @@ esp_err_t aes_cfb128(int request, unsigned char *input, int crypt_len, unsigned 
 	} else {
 		ESP_LOGD(pcTaskGetName(NULL), "mbedtls_ctr_drbg_seed ok");
 	}
+#endif
 
 	// initializes the specified AES context.
 	mbedtls_aes_context aes;
@@ -53,8 +56,8 @@ esp_err_t aes_cfb128(int request, unsigned char *input, int crypt_len, unsigned 
 	// sets the encryption key.
 	mbedtls_aes_setkey_enc( &aes, key, 128 );
 
-	unsigned char iv[16];
-	size_t iv_offset = 0;
+	size_t iv_offset = 0; // The offset in IV (updated after use)
+	unsigned char iv[16]; // The initialization vector (updated after use)
 	memset(iv, 0x00, sizeof(iv));
 
 	// performs an AES-CFB128 encryption operation.
@@ -66,8 +69,10 @@ esp_err_t aes_cfb128(int request, unsigned char *input, int crypt_len, unsigned 
 		} else {
 			ESP_LOGD(pcTaskGetName(NULL), "mbedtls_aes_crypt_cfb128(MBEDTLS_AES_ENCRYPT) ok");
 		}
-		//ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), input, crypt_len, ESP_LOG_INFO);
-		//ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), output, crypt_len, ESP_LOG_INFO);
+		//ESP_LOGI(__FUNCTION__, "iv_offset=%d", iv_offset);
+		//ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, iv, 16, ESP_LOG_INFO);
+		//ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, input, crypt_len, ESP_LOG_INFO);
+		//ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, output, crypt_len, ESP_LOG_INFO);
 
 	// performs an AES-CFB128 decryption operation.
 	} else {
@@ -78,8 +83,10 @@ esp_err_t aes_cfb128(int request, unsigned char *input, int crypt_len, unsigned 
 		} else {
 			ESP_LOGD(pcTaskGetName(NULL), "mbedtls_aes_crypt_cfb128(MBEDTLS_AES_DECRYPT) ok");
 		}
-		//ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), input, crypt_len, ESP_LOG_INFO);
-		//ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), output, crypt_len, ESP_LOG_INFO);
+		//ESP_LOGI(__FUNCTION__, "iv_offset=%d", iv_offset);
+		//ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, iv, 16, ESP_LOG_INFO);
+		//ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, input, crypt_len, ESP_LOG_INFO);
+		//ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, output, crypt_len, ESP_LOG_INFO);
 	}
 
 	// releases and clears the specified AES context.
@@ -87,17 +94,13 @@ esp_err_t aes_cfb128(int request, unsigned char *input, int crypt_len, unsigned 
 	return ESP_OK;
 }
 
+// Generate shared key
 void generateSharedKey(char * text, unsigned char *sharedKey) {
-	// Generate shared secret key
-	//unsigned char sharedKey[16];
 	struct MD5Context context;
 	esp_rom_md5_init(&context);
 
-	//unsigned char text[64];
-	//strcpy((char *)text, "shared secret key");
 	esp_rom_md5_update(&context, (unsigned char*)text, strlen((char *)text));
 	
-	//unsigned char digest[16];
 	esp_rom_md5_final(sharedKey, &context);
 	printf( "MD5('%s') = ", text );
 	for(int i=0;i<16;i++) {
@@ -110,7 +113,7 @@ void app_main()
 {
 	// Generate shared secret key
 	unsigned char sharedKey1[16];
-	generateSharedKey("shared secret key", sharedKey1);
+	generateSharedKey("shared key1", sharedKey1);
 
 	unsigned char input [128];
 	unsigned char output[128];
@@ -129,7 +132,7 @@ void app_main()
 
 	// Generate shared secret key
 	unsigned char sharedKey2[16];
-	generateSharedKey("shared secret key2", sharedKey2);
+	generateSharedKey("shared key2", sharedKey2);
 
 	// performs an AES-CFB128 encryption operation.
 	memset(output, 0x00, sizeof(output));
