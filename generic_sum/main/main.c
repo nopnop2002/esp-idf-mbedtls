@@ -58,7 +58,7 @@ static int generic_print( const mbedtls_md_info_t *md_info, char *filename )
 	return( 0 );
 }
 
-void doPrint(char * md_string, mbedtls_md_type_t md_type) {
+esp_err_t doPrint(char * md_string, mbedtls_md_type_t md_type) {
 	const mbedtls_md_info_t *md_info;
 	ESP_LOGI(TAG, "md_type=%s", md_string);
 	//md_info = mbedtls_md_info_from_type( MBEDTLS_MD_MD5 );
@@ -67,7 +67,7 @@ void doPrint(char * md_string, mbedtls_md_type_t md_type) {
 	md_info = mbedtls_md_info_from_type( md_type );
 	if (md_info == NULL) {
 		ESP_LOGE(TAG, "mbedtls_md_info_from_type fail");
-		vTaskDelete(NULL);
+		return ESP_FAIL;
 	}
 
 	//DIR* dir = opendir(path);
@@ -85,6 +85,7 @@ void doPrint(char * md_string, mbedtls_md_type_t md_type) {
 		generic_print( md_info, filename );
 	}
 	closedir(dir);
+	return ESP_OK;
 }
 
 void app_main()
@@ -124,7 +125,7 @@ void app_main()
 		list++;
 	}
 
-	doPrint("MBEDTLS_MD_MD5", MBEDTLS_MD_MD5);
-	doPrint("MBEDTLS_MD_SHA1", MBEDTLS_MD_SHA1);
-	doPrint("MBEDTLS_MD_SHA256", MBEDTLS_MD_SHA256);
+	ESP_ERROR_CHECK(doPrint("MBEDTLS_MD_MD5", MBEDTLS_MD_MD5));
+	ESP_ERROR_CHECK(doPrint("MBEDTLS_MD_SHA1", MBEDTLS_MD_SHA1));
+	ESP_ERROR_CHECK(doPrint("MBEDTLS_MD_SHA256", MBEDTLS_MD_SHA256));
 }
