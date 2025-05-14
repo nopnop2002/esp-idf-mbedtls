@@ -4,10 +4,10 @@ This project demonstrates encryption and decryption using AES-CFB128.
 
 AES-CBC/AES-ECB has a limit on the size of data that can be encrypted.  
 - AES-CBC   
-	AES-CBC encryption or decryption operation on full blocks.   
+	Encryption or decryption operation on full blocks.   
 	This must be a multiple of the block size (16*n Bytes).   
 - AES-ECB   
-	AES single-block (16 Bytes) encryption or decryption.   
+	Single-block (16 Bytes) encryption or decryption.   
 - AES-CFB128   
 	AES-CFB128 has no limit on the size of data to be encrypted.   
 	Data of any size can be encrypted.   
