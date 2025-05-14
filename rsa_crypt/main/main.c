@@ -136,7 +136,7 @@ void pk_encrypt(void *pvParameters)
 	memset(input, 0, MBEDTLS_MPI_MAX_SIZE);
 	size_t decrypt_len = 0;
 	ret = mbedtls_pk_parse_keyfile( &pk2, "/key/Private.Key", "", mbedtls_ctr_drbg_random, &ctr_drbg );
-	ESP_LOGI(pcTaskGetName(NULL), "mbedtls_pk_parse_public_keyfile=%d", ret);
+	ESP_LOGD(pcTaskGetName(NULL), "mbedtls_pk_parse_keyfile=%d", ret);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_pk_parse_keyfile %d", ret );
 		vTaskDelete(NULL);
@@ -146,7 +146,7 @@ void pk_encrypt(void *pvParameters)
 
 	memset(input, 0, MBEDTLS_MPI_MAX_SIZE);
 	ret = mbedtls_pk_decrypt( &pk2, output, encrypt_len, input, &decrypt_len, sizeof(input), mbedtls_ctr_drbg_random, &ctr_drbg );
-	ESP_LOGI(pcTaskGetName(NULL), "mbedtls_pk_decrypt=%d", ret);
+	ESP_LOGD(pcTaskGetName(NULL), "mbedtls_pk_decrypt=%d", ret);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_pk_decrypt %d", ret );
 		vTaskDelete(NULL);
