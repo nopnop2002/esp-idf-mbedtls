@@ -114,6 +114,7 @@ void pk_encrypt(void *pvParameters)
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_pk_parse_public_keyfile ok");
 	}
 
+	// performs an RSA encryption operation.
 	ESP_LOGI(pcTaskGetName(NULL), "MBEDTLS_MPI_MAX_SIZE=%d", MBEDTLS_MPI_MAX_SIZE);
 	unsigned char input[MBEDTLS_MPI_MAX_SIZE];
 	unsigned char output[MBEDTLS_MPI_MAX_SIZE];
@@ -144,6 +145,7 @@ void pk_encrypt(void *pvParameters)
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_pk_parse_keyfile ok");
 	}
 
+	// performs an RSA decryption operation.
 	memset(input, 0, MBEDTLS_MPI_MAX_SIZE);
 	ret = mbedtls_pk_decrypt( &pk2, output, encrypt_len, input, &decrypt_len, sizeof(input), mbedtls_ctr_drbg_random, &ctr_drbg );
 	ESP_LOGD(pcTaskGetName(NULL), "mbedtls_pk_decrypt=%d", ret);
@@ -154,6 +156,13 @@ void pk_encrypt(void *pvParameters)
 		ESP_LOGI(pcTaskGetName(NULL), "mbedtls_pk_decrypt ok. decrypt_len=%d", decrypt_len);
 	}
 	ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), input, decrypt_len, ESP_LOG_INFO);
+
+	// releases and clears the specified AES context.
+	mbedtls_pk_free(&pk);
+	mbedtls_pk_free(&pk2);
+	mbedtls_entropy_free(&entropy);
+	mbedtls_ctr_drbg_free(&ctr_drbg);
+	
 	vTaskDelete(NULL);
 }
 
