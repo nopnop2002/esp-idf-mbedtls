@@ -1,7 +1,7 @@
 # AES encryption & decryption
 AES uses the same key (shared key) for encryption and decryption.   
 This project uses mbedtls_ctr_drbg_seed and mbedtls_ctr_drbg_random to generate the shared key.   
-
+One advantage of AES encryption is that the size of the data before and after encryption remains the same.   
 I referred [this](https://tls.mbed.org/kb/how-to/encrypt-with-aes-cbc).   
 
 |Mechanism|ESP-IDF|InputSize|
