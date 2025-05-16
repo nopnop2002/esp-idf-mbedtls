@@ -3,7 +3,7 @@ RSA uses different keys for encryption and decryption.
 The key used for encryption is called the public key, and the key used for decryption is called the private key.   
 This project uses openssl to generate both keys.   
 You can also use ssh-keygen to generate the keys.   
-
+Note that with RSA encryption, the size of the data before and after encryption will always be different.   
 I referred [this](https://mbed-tls.readthedocs.io/en/latest/kb/how-to/encrypt-and-decrypt-with-rsa/).   
 
 # Generate a key pair
