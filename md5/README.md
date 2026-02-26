@@ -11,11 +11,11 @@ TF-PSA-Crypto, the successor of Mbed TLS 3.x for cryptography, replaces most mbe
 	These functions need to be replaced with the new PSA API.
 
 - TF-PSA-Crypto API   
-	Available with both ESP-IDF V5 and V6.
+	Available with both ESP-IDF V5 and V6.   
 	TF-PSA-Crypto will still support the <mbedtls/md.h> interface for hash calculations throughout the 1.x version range, so migrating to PSA for this use case is optional.
 
 - PSA API   
-	Only available with ESP-IDF V6.
+	Only available with ESP-IDF V6.   
 
 ---
 
