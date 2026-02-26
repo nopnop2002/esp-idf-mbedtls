@@ -1,6 +1,9 @@
 /* The example of ESP-IDF
  *
  * This sample code is in the public domain.
+ *
+ * I based this on:
+ * https://github.com/wolfeidau/mbedtls/blob/master/test/example-hashing/main.cpp
  */
 #include <string.h>
 
@@ -14,102 +17,156 @@
 #include "psa/crypto.h"
 #endif
 
-void esp_rom_task(void *pvParameter)
-{
-	printf("MD5 using ROM Function\n");
-	unsigned char input[] = "Hello, world!";
-	unsigned char digest[16];
+static const char hello_str[] = "Hello, world!";
+static const unsigned char *hello_buffer = (const unsigned char *) hello_str;
+static const size_t hello_len = sizeof hello_str - 1;
 
+static void print_hex(const char *title, const unsigned char buf[], size_t len)
+{
+	printf("%s: ", title);
+
+	for (size_t i = 0; i < len; i++)
+		printf("%02x", buf[i]);
+
+	printf("\r\n");
+}
+
+void method0(void *pvParameter)
+{
+	/*
+	 * Method 0: use rom component of a specific MD5 module
+	 */
+	unsigned char output0[16]; /* MD5 outputs 16 bytes */
 	struct MD5Context context;
 	esp_rom_md5_init(&context);
 
-	esp_rom_md5_update(&context, input, strlen((char *)input));
+	esp_rom_md5_update(&context, hello_buffer, hello_len);
 
-	esp_rom_md5_final(digest, &context);
+	esp_rom_md5_final(output0, &context);
 
-	printf( "MD5('%s') = ", input );
-	for(int i=0;i<16;i++) {
-		printf("%02x ", digest[i]);
-	}
-	printf("\n\n");
+	print_hex("Method 0", output0, sizeof output0);
 	vTaskDelete(NULL);
 }
 
 #if (ESP_IDF_VERSION_MAJOR == 5)
-void mbedtls_md5_task(void *pvParameter)
+void method1(void *pvParameter)
 {
-	printf("MD5 using mbedtls_md5 api\n");
-	unsigned char input[] = "Hello, world!";
-	unsigned char digest[16];
+	/*
+	 * Method 1: use all-in-one function of a specific MD5 module
+	 */
+	unsigned char output1[16]; /* MD5 outputs 16 bytes */
 
-	int ret;
-	ret = mbedtls_md5(input, strlen((char *)input), digest);
-	if(ret != 0) {	
-		printf("mbedtls_md5 fail %d\n", ret);
-		return;
-	}
+	mbedtls_md5(hello_buffer, hello_len, output1);
 
-	printf( "MD5('%s') = ", input );
-	for(int i=0;i<16;i++) {
-		printf("%02x ", digest[i]);
-	}
-
-	printf("\n\n");
+	print_hex("Method 1", output1, sizeof output1);
 	vTaskDelete(NULL);
 }
 #endif
 
-void mbedtls_task(void *pvParameter)
+#if (ESP_IDF_VERSION_MAJOR == 5)
+void method2(void *pvParameter)
 {
-	printf("MD5 using TF-PSA-Crypto API\n");
-	unsigned char input[] = "Hello, world!";
-	unsigned char digest[16];
+	/*
+	 * Method 2: use the streaming interface of a specific MD5 module
+	 * This is useful if we get our input piecewise.
+	 */
+	unsigned char output2[16];
+	mbedtls_md5_context ctx2;
 
-	mbedtls_md_type_t md_type = MBEDTLS_MD_MD5;
-	struct mbedtls_md_context_t context;
-	mbedtls_md_init(&context);
+	mbedtls_md5_init(&ctx2);
+	mbedtls_md5_starts(&ctx2);
 
-	int ret;
-	ret = mbedtls_md_setup(&context, mbedtls_md_info_from_type(md_type), 0);
-	if(ret != 0) {	
-		printf("mbedtls_md_setup fail %d\n", ret);
+	/* Simulating multiple fragments */
+	mbedtls_md5_update(&ctx2, hello_buffer, 1);
+	mbedtls_md5_update(&ctx2, hello_buffer + 1, 1);
+	mbedtls_md5_update(&ctx2, hello_buffer + 2, hello_len - 2);
+
+	mbedtls_md5_finish(&ctx2, output2);
+	print_hex("Method 2", output2, sizeof output2);
+
+	/* Or you could re-use the context by doing mbedtls_md5_starts() again */
+	mbedtls_md5_free(&ctx2);
+	vTaskDelete(NULL);
+}
+#endif
+
+void method3(void *pvParameter)
+{
+	/*
+	 * Method 3: use all-in-one function of the generice interface
+	 */
+	unsigned char output3[MBEDTLS_MD_MAX_SIZE]; /* Enough for any hash */
+
+	/* Can easily pick any hash you want, by identifier */
+	const mbedtls_md_info_t *md_info3 = mbedtls_md_info_from_type(MBEDTLS_MD_MD5);
+
+	if (md_info3 == NULL)
+	{
+		printf("MD5 not available\r\n");
 		return;
 	}
 
-	ret = mbedtls_md_starts(&context);
-	if(ret != 0) {	
-		printf("mbedtls_md_starts fail %d\n", ret);
+	int ret3 = mbedtls_md(md_info3, hello_buffer, hello_len, output3);
+
+	if (ret3 != 0)
+	{
+		printf("md() returned -0x%04X\r\n", -ret3);
 		return;
 	}
 
-	ret = mbedtls_md_update(&context, input, strlen((char *)input));
-	if(ret != 0) {	
-		printf("mbedtls_md_update fail %d\n", ret);
-		return;
-	}
-	
-	ret = mbedtls_md_finish(&context, digest);
-	if(ret != 0) {	
-		printf("mbedtls_md_finish fail %d\n", ret);
+	print_hex("Method 3", output3, mbedtls_md_get_size(md_info3));
+	vTaskDelete(NULL);
+}
+
+void method4(void *pvParameter)
+{
+	/*
+	 * Method 4: streaming & generic interface
+	 */
+	unsigned char output4[MBEDTLS_MD_MAX_SIZE]; /* Enough for any hash */
+
+	const mbedtls_md_info_t *md_info4 = mbedtls_md_info_from_type(MBEDTLS_MD_MD5);
+
+	if (md_info4 == NULL)
+	{
+		printf("MD5 not available\r\n");
 		return;
 	}
 
-	printf( "MD5('%s') = ", input );
-	for(int i=0;i<16;i++) {
-		printf("%02x ", digest[i]);
-	}
-	printf("\n\n");
+	mbedtls_md_context_t ctx4;
 
-	mbedtls_md_free(&context);
+	mbedtls_md_init(&ctx4);
+
+	//The function `mbedtls_md_init_ctx()` was removed; please use mbedtls_md_setup() instead.
+	//int ret4 = mbedtls_md_init_ctx(&ctx4, md_info4);
+	int ret4 = mbedtls_md_setup(&ctx4, md_info4, 0);
+	if (ret4 != 0)
+	{
+		printf("md_init_ctx() returned -0x%04X\r\n", -ret4);
+		return;
+	}
+
+	mbedtls_md_starts(&ctx4);
+
+	/* Simulating multiple fragments */
+	mbedtls_md_update(&ctx4, hello_buffer, 1);
+	mbedtls_md_update(&ctx4, hello_buffer + 1, 1);
+	mbedtls_md_update(&ctx4, hello_buffer + 2, hello_len - 2);
+
+	mbedtls_md_finish(&ctx4, output4);
+	print_hex("Method 4", output4, mbedtls_md_get_size(md_info4));
+
+	/* Or you could re-use the context by doing mbedtls_md_starts() again */
+	mbedtls_md_free(&ctx4);
 	vTaskDelete(NULL);
 }
 
 #if (ESP_IDF_VERSION_MAJOR == 6)
-void psa_task(void *pvParameter)
+void method5(void *pvParameter)
 {
-	printf("MD5 using PSA API\n");
-	unsigned char input[] = "Hello, world!";
-
+	/*
+	 * Method 5: using psa interface
+	 */
 	psa_status_t status;
 	psa_algorithm_t alg = PSA_ALG_MD5;
 	psa_hash_operation_t operation = PSA_HASH_OPERATION_INIT;
@@ -129,7 +186,7 @@ void psa_task(void *pvParameter)
 		printf("Failed to begin hash operation\n");
 		return;
 	}
-	status = psa_hash_update(&operation, input, strlen((char*)input));
+	status = psa_hash_update(&operation, hello_buffer, hello_len);
 	if (status != PSA_SUCCESS) {
 		printf("Failed to update hash operation\n");
 		return;
@@ -141,11 +198,7 @@ void psa_task(void *pvParameter)
 		return;
 	}
 
-	printf( "MD5('%s') = ", input );
-	for(int i=0;i<actual_hash_len;i++) {
-		printf("%02x ", actual_hash[i]);
-	}
-	printf("\n\n");
+	print_hex("Method 5", actual_hash, actual_hash_len);
 
 	/* Clean up hash operation context */
 	psa_hash_abort(&operation);
@@ -157,15 +210,14 @@ void psa_task(void *pvParameter)
 
 void app_main()
 {
-	xTaskCreate(&esp_rom_task, "ROM", 2048, NULL, 2, NULL);
-
+	xTaskCreate(&method0, "METHOD0", 2048, NULL, 2, NULL);
 #if (ESP_IDF_VERSION_MAJOR == 5)
-	xTaskCreate(&mbedtls_md5_task, "MBEDTLS_MD5", 2048, NULL, 2, NULL);
+	xTaskCreate(&method1, "METHOD1", 2048, NULL, 2, NULL);
+	xTaskCreate(&method2, "METHOD2", 2048, NULL, 2, NULL);
 #endif
-
-	xTaskCreate(&mbedtls_task, "MBEDTLS", 2048, NULL, 2, NULL);
-
+	xTaskCreate(&method3, "METHOD3", 2048, NULL, 2, NULL);
+	xTaskCreate(&method4, "METHOD4", 2048, NULL, 2, NULL);
 #if (ESP_IDF_VERSION_MAJOR == 6)
-	xTaskCreate(&psa_task, "PSA", 2048, NULL, 2, NULL);
+	xTaskCreate(&method5, "METHOD5", 2048, NULL, 2, NULL);
 #endif
 }
