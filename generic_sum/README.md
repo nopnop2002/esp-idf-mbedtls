@@ -2,7 +2,7 @@
 
 I ported from [here](https://github.com/Mbed-TLS/mbedtls/tree/v3.6.3/programs/hash).
 
-# Available message digests:
+# Available hash algorithms:
 ```
   SHA512
   SHA384
