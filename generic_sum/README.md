@@ -1,4 +1,4 @@
-# Generate message digest from file
+# Generate a hash value from a file
 
 I ported from [here](https://github.com/Mbed-TLS/mbedtls/tree/v3.6.3/programs/hash).
 
