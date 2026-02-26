@@ -1,4 +1,6 @@
 # BASE64 Encode/Decode
+The interfaces in base64.h, asn1.h, asn1write.h and pem.h are intended to support X.509 and key file formats.   
+Since these APIs are not directly about cryptography, there is no PSA replacement in Mbed TLS 3.6 or in TF-PSA-Crypto 1.0.
 
 ```
 I (304) BASE64: 0x3ffb3e90   00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  |................|
