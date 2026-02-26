@@ -7,12 +7,12 @@ I ported from [here](https://github.com/wolfeidau/mbedtls/blob/master/test/examp
 - mbedtls_sha256 API   
 	Only available with ESP-IDF V5.   
 	ESP-IDF V6 does not have APIs dedicated to specific hash algorithms (md5.h, sha1.h, sha256.h, sha512.h, sha3.h).   
-	These functions need to be replaced with the new PSA API.
+	These functions need to be replaced with the new PSA API.   
 	Method 1 and Method 2 use this API.
 
 - TF-PSA-Crypto API   
 	Available with both ESP-IDF V5 and V6.   
-	TF-PSA-Crypto will still support the <mbedtls/md.h> interface for hash calculations throughout the 1.x version range, so migrating to PSA for this use case is optional.
+	TF-PSA-Crypto will still support the <mbedtls/md.h> interface for hash calculations throughout the 1.x version range, so migrating to PSA for this use case is optional.   
 	Method 3 and Method 4 use this API.
 
 - PSA API   
