@@ -2,18 +2,18 @@
 TF-PSA-Crypto, the successor of Mbed TLS 3.x for cryptography, replaces most mbedtls_xxx cryptography APIs with newer psa_xxx APIs.    
 [This](https://github.com/espressif/mbedtls/blob/41dc25d/tf-psa-crypto/docs/psa-transition.md) guide is intended to help migrate existing applications that used Mbed TLS for cryptography.   
 
-- esp_rom_md5 API
+- esp_rom_md5 API   
 	Available with both ESP-IDF V5 and V6.
 
-- mbedtls_md5 API
+- mbedtls_md5 API   
 	Only available with ESP-IDF V5.
 	This API has been deprecated in ESP-IDF V6 and should be replaced with the new PSA API.
 
-- TF-PSA-Crypto API
+- TF-PSA-Crypto API   
 	Available with both ESP-IDF V5 and V6.
 	TF-PSA-Crypto will still support the <mbedtls/md.h> interface for hash calculations throughout the 1.x version range, so migrating to PSA for this use case is optional.
 
-- PSA API
+- PSA API   
 	Only available with ESP-IDF V6.
 
 ---
