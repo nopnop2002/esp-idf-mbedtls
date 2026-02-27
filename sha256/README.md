@@ -1,4 +1,8 @@
 # Generates hash values using SHA256
+TF-PSA-Crypto 1.0.0 removes most of the legacy crypto API. 
+It also removes builds that did not include support for the legacy configuration of the PSA subsystem and crypto mechanisms.   
+The corresponding release Mbed TLS 4.0.0 drops support for cryptography calls that bypass PSA.   
+
 TF-PSA-Crypto, the successor of Mbed TLS 3.x for cryptography, replaces most mbedtls_xxx cryptography APIs with newer psa_xxx APIs.    
 [This](https://github.com/espressif/mbedtls/blob/41dc25d/tf-psa-crypto/docs/psa-transition.md) guide is intended to help migrate existing applications that used Mbed TLS for cryptography.   
 
