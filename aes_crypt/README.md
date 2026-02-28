@@ -17,6 +17,9 @@ I referred [this](https://tls.mbed.org/kb/how-to/encrypt-with-aes-cbc).
 |AES_CTR|Supported|Any|
 |AES_XTS|Supported|Any|
 
+TF-PSA-Crypto 1.0.0 removes APIs specific to certain block ciphers like aes.h, aria.h, camellia.h, des.h.   
+TF-PSA-Crypto 1.0.0 requires the use of the PSA API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).
+
 # AES_CFB8   
 ```
 I (313) aes_cfb8: mbedtls_aes_crypt_cfb8(ENCRYPT) ok
