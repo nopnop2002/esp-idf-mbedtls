@@ -1,5 +1,5 @@
 # Generates hash values using SHA256
-TF-PSA-Crypto 1.0.0 removes most of the legacy crypto API. 
+TF-PSA-Crypto 1.0.0 removes most of the legacy crypto API.   
 It also removes builds that did not include support for the legacy configuration of the PSA subsystem and crypto mechanisms.   
 The corresponding release Mbed TLS 4.0.0 drops support for cryptography calls that bypass PSA.   
 
