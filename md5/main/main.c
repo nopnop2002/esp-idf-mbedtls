@@ -211,12 +211,17 @@ void method5(void *pvParameter)
 void app_main()
 {
 	xTaskCreate(&method0, "METHOD0", 2048, NULL, 2, NULL);
+	vTaskDelay(100);
 #if (ESP_IDF_VERSION_MAJOR == 5)
 	xTaskCreate(&method1, "METHOD1", 2048, NULL, 2, NULL);
+	vTaskDelay(100);
 	xTaskCreate(&method2, "METHOD2", 2048, NULL, 2, NULL);
+	vTaskDelay(100);
 #endif
 	xTaskCreate(&method3, "METHOD3", 2048, NULL, 2, NULL);
+	vTaskDelay(100);
 	xTaskCreate(&method4, "METHOD4", 2048, NULL, 2, NULL);
+	vTaskDelay(100);
 #if (ESP_IDF_VERSION_MAJOR == 6)
 	xTaskCreate(&method5, "METHOD5", 2048, NULL, 2, NULL);
 #endif
