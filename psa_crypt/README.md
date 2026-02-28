@@ -1,7 +1,7 @@
 # PSA encryption & decryption
 
 TF-PSA-Crypto 1.0.0 removes APIs specific to certain block ciphers like aes.h, aria.h, camellia.h, des.h.   
-TF-PSA-Crypto 1.0.0 requires the use of the PSA Crypto API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).
+TF-PSA-Crypto 1.0.0 requires the use of the PSA Crypto API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).   
 TF-PSA-Crypto 1.0.0 supports the following cryptographic algorithms:   
 - PSA_ALG_CTR   
 - PSA_ALG_CFB
