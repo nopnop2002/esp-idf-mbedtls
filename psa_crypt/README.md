@@ -3,18 +3,19 @@
 TF-PSA-Crypto 1.0.0 removes APIs specific to certain block ciphers like aes.h, aria.h, camellia.h, des.h.   
 TF-PSA-Crypto 1.0.0 requires the use of the PSA Crypto API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).   
 TF-PSA-Crypto 1.0.0 supports the following cryptographic algorithms:   
-## Unauthenticated cipher modes
-- PSA_ALG_CTR
-- PSA_ALG_CFB
-- PSA_ALG_OFB
-- PSA_ALG_XTS
-- PSA_ALG_ECB_NO_PADDING
-- PSA_ALG_CBC_NO_PADDING
-- PSA_ALG_CBC_PKCS7
-- PSA_ALG_CCM_STAR_NO_TAG.
-## AEAD modes
-- PSA_ALG_CCM
-- PSA_ALG_GCM
+- Unauthenticated cipher modes
+	- PSA_ALG_CTR
+	- PSA_ALG_CFB
+	- PSA_ALG_OFB
+	- PSA_ALG_XTS
+	- PSA_ALG_ECB_NO_PADDING
+	- PSA_ALG_CBC_NO_PADDING
+	- PSA_ALG_CBC_PKCS7
+	- PSA_ALG_CCM_STAR_NO_TAG.
+
+- AEAD modes
+	- PSA_ALG_CCM
+	- PSA_ALG_GCM
 
 More information on cryptographic algorithms can be found [here](https://mbed-tls.readthedocs.io/projects/api/en/development/api/group/group__crypto__types/#group__crypto__types).   
 PSA cryptography API examples is [here](https://github.com/Mbed-TLS/TF-PSA-Crypto/blob/development/programs/README.md).   
