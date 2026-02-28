@@ -18,7 +18,7 @@ I referred [this](https://tls.mbed.org/kb/how-to/encrypt-with-aes-cbc).
 |AES_XTS|Supported|Any|
 
 TF-PSA-Crypto 1.0.0 removes APIs specific to certain block ciphers like aes.h, aria.h, camellia.h, des.h.   
-TF-PSA-Crypto 1.0.0 requires the use of the PSA API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).
+TF-PSA-Crypto 1.0.0 requires the use of the PSA Crypto API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).
 
 # AES_CFB8   
 ```
