@@ -37,6 +37,7 @@ MBEDTLS_VERSION_STRING_FULL=Mbed TLS 3.6.5
 
 
 ESP-IDF V6.0 includes Version 4.0.0.   
+ESP-IDF v6.0 updates to Mbed TLS v4.0, where PSA Crypto is the primary cryptography interface (TF-PSA-Crypto provides cryptography; Mbed TLS focuses on TLS and X.509).   
 ```
 MBEDTLS_VERSION_STRING=4.0.0
 MBEDTLS_VERSION_STRING_FULL=Mbed TLS 4.0.0
