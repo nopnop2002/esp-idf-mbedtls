@@ -17,8 +17,8 @@ I referred [this](https://tls.mbed.org/kb/how-to/encrypt-with-aes-cbc).
 |AES_CTR|Supported|Any|
 |AES_XTS|Supported|Any|
 
-TF-PSA-Crypto 1.0.0 removes APIs specific to certain block ciphers like aes.h, aria.h, camellia.h, des.h.   
-TF-PSA-Crypto 1.0.0 requires the use of the PSA Crypto API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).
+In Mbed TLS v4.0, most legacy cryptography APIs have been removed and PSA Crypto is the primary interface.    
+Mbed TLS v4.0 requires the use of the PSA Crypto API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).
 
 # AES_CFB8   
 ```
