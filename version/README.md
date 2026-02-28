@@ -37,12 +37,14 @@ MBEDTLS_VERSION_STRING_FULL=Mbed TLS 3.6.5
 
 
 ESP-IDF V6.0 includes Version 4.0.0.   
-ESP-IDF V6.0 updates to Mbed TLS v4.0, where PSA Crypto is the primary cryptography interface (TF-PSA-Crypto provides cryptography; Mbed TLS focuses on TLS and X.509).   
-In Mbed TLS 4.0, the Mbed TLS project was split into two repositories:   
-- [Mbed TLS](https://github.com/Mbed-TLS/mbedtls): provides TLS and X.509 functionality.   
-- [TF-PSA-Crypto](https://github.com/Mbed-TLS/TF-PSA-Crypto): provides the standalone cryptography library, notably including the PSA Cryptography API.   
 ```
 MBEDTLS_VERSION_STRING=4.0.0
 MBEDTLS_VERSION_STRING_FULL=Mbed TLS 4.0.0
 ```
+ESP-IDF V6.0 updates to Mbed TLS v4.0, where PSA Crypto is the primary cryptography interface (TF-PSA-Crypto provides cryptography; Mbed TLS focuses on TLS and X.509).   
+In Mbed TLS 4.0, the Mbed TLS project was split into two repositories:   
+- [Mbed TLS](https://github.com/Mbed-TLS/mbedtls): provides TLS and X.509 functionality.   
+- [TF-PSA-Crypto](https://github.com/Mbed-TLS/TF-PSA-Crypto): provides the standalone cryptography library, notably including the PSA Cryptography API.   
+
+Click [here](https://documentation.espressif.com/projects/esp-idf/en/latest/esp32c6/migration-guides/release-6.x/6.0/security.html) for details.   
 
