@@ -13,6 +13,7 @@ TF-PSA-Crypto 1.0.0 supports the following cryptographic algorithms:
 - PSA_ALG_CCM_STAR_NO_TAG.
 
 More information on cryptographic algorithms can be found [here](https://mbed-tls.readthedocs.io/projects/api/en/development/api/group/group__crypto__types/#group__crypto__types).   
+PSA cryptography API examples is [here](https://github.com/Mbed-TLS/TF-PSA-Crypto/blob/development/programs/README.md).   
 This project uses AES-128-CTR.   
 
 - Encryption
