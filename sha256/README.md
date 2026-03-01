@@ -6,7 +6,7 @@ The corresponding release Mbed TLS 4.0.0 drops support for cryptography calls th
 TF-PSA-Crypto, the successor of Mbed TLS 3.x for cryptography, replaces most mbedtls_xxx cryptography APIs with newer psa_xxx APIs.    
 [This](https://github.com/espressif/mbedtls/blob/41dc25d/tf-psa-crypto/docs/psa-transition.md) guide is intended to help migrate existing applications that used Mbed TLS for cryptography.   
 
-I ported from [here](https://github.com/wolfeidau/mbedtls/blob/master/test/example-hashing/main.cpp).   
+This project was ported from [here](https://github.com/wolfeidau/mbedtls/blob/master/test/example-hashing/main.cpp).   
 
 - Using mbedtls/sha256.h   
 	Only available with ESP-IDF V5.   
