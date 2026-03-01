@@ -44,9 +44,7 @@ void method1(void *pvParameter)
 	print_hex("Method 1", output1, sizeof output1);
 	vTaskDelete(NULL);
 }
-#endif
 
-#if (ESP_IDF_VERSION_MAJOR == 5)
 void method2(void *pvParameter)
 {
 	/*
@@ -148,7 +146,28 @@ void method4(void *pvParameter)
 void method5(void *pvParameter)
 {
 	/*
-	 * Method 5: using psa interface
+	 * Method 5: use all-in-one function of the psa interface
+	 */
+	psa_status_t status;
+	psa_algorithm_t alg = PSA_ALG_SHA_1;
+	unsigned char actual_hash[PSA_HASH_MAX_SIZE];
+	size_t actual_hash_len;
+
+	status = psa_hash_compute(alg, hello_buffer, hello_len, actual_hash, sizeof(actual_hash), &actual_hash_len);
+	if (status != PSA_SUCCESS) {
+		printf("Failed to compute hash operation\n");
+		return;
+	}
+
+	print_hex("Method 5", actual_hash, actual_hash_len);
+
+	vTaskDelete(NULL);
+}
+
+void method6(void *pvParameter)
+{
+	/*
+	 * Method 6: streaming & psa interface
 	 */
 	psa_status_t status;
 	psa_algorithm_t alg = PSA_ALG_SHA_1;
@@ -174,14 +193,13 @@ void method5(void *pvParameter)
 		printf("Failed to update hash operation\n");
 		return;
 	}
-	status = psa_hash_finish(&operation, actual_hash, sizeof(actual_hash),
-							 &actual_hash_len);
+	status = psa_hash_finish(&operation, actual_hash, sizeof(actual_hash), &actual_hash_len);
 	if (status != PSA_SUCCESS) {
 		printf("Failed to finish hash operation\n");
 		return;
 	}
 
-	print_hex("Method 5", actual_hash, actual_hash_len);
+	print_hex("Method 6", actual_hash, actual_hash_len);
 
 	/* Clean up hash operation context */
 	psa_hash_abort(&operation);
@@ -205,5 +223,7 @@ void app_main()
 	vTaskDelay(100);
 #if (ESP_IDF_VERSION_MAJOR == 6)
 	xTaskCreate(&method5, "METHOD5", 2048, NULL, 2, NULL);
+	vTaskDelay(100);
+	xTaskCreate(&method6, "METHOD6", 2048, NULL, 2, NULL);
 #endif
 }

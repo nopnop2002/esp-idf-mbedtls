@@ -21,7 +21,7 @@ This project was based on [this](https://github.com/wolfeidau/mbedtls/blob/maste
 
 - Using psa/crypto.h   
 	Only available with ESP-IDF V6.   
-	Method 5 use this API.
+	Method 5 and Method 6 use this API.
 
 ---
 
@@ -38,6 +38,7 @@ Method 4: 943a702d06f34599aee1f8da8ef9f7296031d699
 Method 3: 943a702d06f34599aee1f8da8ef9f7296031d699
 Method 4: 943a702d06f34599aee1f8da8ef9f7296031d699
 Method 5: 943a702d06f34599aee1f8da8ef9f7296031d699
+Method 6: 943a702d06f34599aee1f8da8ef9f7296031d699
 ```
 
 - Linux CLI
