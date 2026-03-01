@@ -17,6 +17,10 @@ TF-PSA-Crypto 1.0.0 supports the following cryptographic algorithms:
 	- PSA_ALG_CCM
 	- PSA_ALG_GCM
 
+Note   
+The unauthenticated cipher API is provided to implement legacy protocols and for use cases where the data integrity and authenticity is guaranteed by non-cryptographic means.
+It is recommended that newer protocols use Authenticated encryption (AEAD).
+
 For information on configuring the cryptographic algorithms, see ```Cipher key management``` in [this](https://github.com/espressif/mbedtls/blob/41dc25d/tf-psa-crypto/docs/psa-transition.md) document.   
 PSA cryptography API examples is [here](https://github.com/Mbed-TLS/TF-PSA-Crypto/blob/development/programs/README.md).   
 This project uses AES-128-CTR.   
