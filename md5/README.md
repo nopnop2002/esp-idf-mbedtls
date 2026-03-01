@@ -43,3 +43,9 @@ Method 3: 6cd3556deb0da54bca060b4c39479839
 Method 4: 6cd3556deb0da54bca060b4c39479839
 Method 5: 6cd3556deb0da54bca060b4c39479839
 ```
+
+- Linux CLI
+```
+$ echo -n "Hello, world!" | md5sum
+6cd3556deb0da54bca060b4c39479839  -
+```
