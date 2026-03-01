@@ -23,7 +23,7 @@ TF-PSA-Crypto, the successor of Mbed TLS 3.x for cryptography, replaces most mbe
 
 - Using psa/crypto.h   
 	Only available with ESP-IDF V6.   
-	Method 5 use this API.   
+	Method 5 and Method 6 use this API.   
 
 ---
 
@@ -42,6 +42,7 @@ Method 0: 6cd3556deb0da54bca060b4c39479839
 Method 3: 6cd3556deb0da54bca060b4c39479839
 Method 4: 6cd3556deb0da54bca060b4c39479839
 Method 5: 6cd3556deb0da54bca060b4c39479839
+Method 6: 6cd3556deb0da54bca060b4c39479839
 ```
 
 - Linux CLI
