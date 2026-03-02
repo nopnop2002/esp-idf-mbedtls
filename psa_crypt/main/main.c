@@ -15,7 +15,6 @@
 
 /* psa includes */
 #include <psa/crypto.h>
-#include <psa/crypto_extra.h>
 
 #define APP_SUCCESS (0)
 #define APP_ERROR (-1)
