@@ -7,9 +7,14 @@ Note that with RSA encryption, the size of the data before and after encryption 
 I referred [this](https://mbed-tls.readthedocs.io/en/latest/kb/how-to/encrypt-and-decrypt-with-rsa/).   
 
 # Generate a key pair
+A key pair consists of a private key (Private.Key) and a public key (Public.Key).   
 ```
 $ chmod 777 ./mkkey.sh
 $ ./mkkey.sh
+$ ls -l key
+total 8
+-rw-rw-r-- 1 nop nop 1675 Mar  1 14:27 Private.Key
+-rw-rw-r-- 1 nop nop  451 Mar  1 14:27 Public.Key
 ```
 
 # encryption
