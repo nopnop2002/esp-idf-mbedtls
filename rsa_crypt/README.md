@@ -17,7 +17,7 @@ total 8
 -rw-rw-r-- 1 nop nop  451 Mar  1 14:27 Public.Key
 ```
 
-# encryption
+# Encryption using public key
 ```
 I (532) PK: 0x3ffb6b78   31 47 12 3c 32 88 2e 8e  43 3d 8f 89 e5 3f e2 c9  |1G.<2...C=...?..|
 I (532) PK: 0x3ffb6b88   55 43 18 c7 d4 f4 4d db  d4 4a cd 58 43 d5 0e d0  |UC....M..J.XC...|
@@ -38,7 +38,7 @@ I (642) PK: 0x3ffb6c68   9a b0 ee c2 ec 7e 40 c2  0b 48 85 a4 80 fd 6b b9  |....
 ```
 
 
-# decryption
+# Decryption using private key
 ```
 I (1302) PK: 0x3ffb6778   00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  |................|
 I (1312) PK: 0x3ffb6788   10 11 12 13 14 15 16 17  18 19 1a 1b 1c 1d 1e 1f  |................|
