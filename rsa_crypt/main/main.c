@@ -13,10 +13,6 @@
 #include "esp_spiffs.h"
 #include "esp_log.h"
 
-/* Cryptoauthlib includes */
-//#include "cryptoauthlib.h"
-//#include "mbedtls/atca_mbedtls_wrap.h"
-
 /* mbedTLS includes */
 #include "mbedtls/platform.h"
 #include "mbedtls/debug.h"
@@ -103,9 +99,9 @@ void pk_encrypt(void *pvParameters)
 	}
 
 	// Read the RSA public key
-	mbedtls_pk_context pk;
-	mbedtls_pk_init( &pk );
-	ret = mbedtls_pk_parse_public_keyfile( &pk, "/key/Public.Key" );
+	mbedtls_pk_context pk_encrypt;
+	mbedtls_pk_init( &pk_encrypt );
+	ret = mbedtls_pk_parse_public_keyfile( &pk_encrypt, "/key/Public.pem" );
 	ESP_LOGD(pcTaskGetName(NULL), "mbedtls_pk_parse_public_keyfile=%d", ret);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_pk_parse_public_keyfile returned %d", ret );
@@ -121,7 +117,7 @@ void pk_encrypt(void *pvParameters)
 	for (int i=0;i<MBEDTLS_MPI_MAX_SIZE;i++) input[i] = i;
 	memset(output, 0, MBEDTLS_MPI_MAX_SIZE);
 	size_t encrypt_len = 0;
-	ret = mbedtls_pk_encrypt( &pk, input, 64, output, &encrypt_len, sizeof(output), mbedtls_ctr_drbg_random, &ctr_drbg );
+	ret = mbedtls_pk_encrypt( &pk_encrypt, input, 64, output, &encrypt_len, sizeof(output), mbedtls_ctr_drbg_random, &ctr_drbg );
 	ESP_LOGD(pcTaskGetName(NULL), "mbedtls_pk_encrypt=%d", ret);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_pk_encrypt returned %d", ret );
@@ -132,11 +128,11 @@ void pk_encrypt(void *pvParameters)
 	ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), output, encrypt_len, ESP_LOG_INFO);
 
 	// Read the RSA privatekey
-	mbedtls_pk_context pk2;
-	mbedtls_pk_init( &pk2 );
+	mbedtls_pk_context pk_decrypt;
+	mbedtls_pk_init( &pk_decrypt );
 	memset(input, 0, MBEDTLS_MPI_MAX_SIZE);
 	size_t decrypt_len = 0;
-	ret = mbedtls_pk_parse_keyfile( &pk2, "/key/Private.Key", "", mbedtls_ctr_drbg_random, &ctr_drbg );
+	ret = mbedtls_pk_parse_keyfile( &pk_decrypt, "/key/Private.pem", "", mbedtls_ctr_drbg_random, &ctr_drbg );
 	ESP_LOGD(pcTaskGetName(NULL), "mbedtls_pk_parse_keyfile=%d", ret);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_pk_parse_keyfile %d", ret );
@@ -147,7 +143,7 @@ void pk_encrypt(void *pvParameters)
 
 	// performs an RSA decryption operation.
 	memset(input, 0, MBEDTLS_MPI_MAX_SIZE);
-	ret = mbedtls_pk_decrypt( &pk2, output, encrypt_len, input, &decrypt_len, sizeof(input), mbedtls_ctr_drbg_random, &ctr_drbg );
+	ret = mbedtls_pk_decrypt( &pk_decrypt, output, encrypt_len, input, &decrypt_len, sizeof(input), mbedtls_ctr_drbg_random, &ctr_drbg );
 	ESP_LOGD(pcTaskGetName(NULL), "mbedtls_pk_decrypt=%d", ret);
 	if (ret != 0) {
 		ESP_LOGE(pcTaskGetName(NULL), "mbedtls_pk_decrypt %d", ret );
@@ -158,8 +154,8 @@ void pk_encrypt(void *pvParameters)
 	ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), input, decrypt_len, ESP_LOG_INFO);
 
 	// releases and clears the specified AES context.
-	mbedtls_pk_free(&pk);
-	mbedtls_pk_free(&pk2);
+	mbedtls_pk_free(&pk_encrypt);
+	mbedtls_pk_free(&pk_decrypt);
 	mbedtls_entropy_free(&entropy);
 	mbedtls_ctr_drbg_free(&ctr_drbg);
 	
@@ -180,10 +176,9 @@ void app_main()
 	ESP_ERROR_CHECK( err );
 
 	ESP_LOGI(TAG, "Initializing SPIFFS");
-	// Maximum files that could be open at the same time is 10.
-	ESP_ERROR_CHECK(mountSPIFFS("/key", "storage", 2));
+	// Maximum files that could be open at the same time is 4.
+	ESP_ERROR_CHECK(mountSPIFFS("/key", "storage", 4));
 	listSPIFFS("/key/");
 
 	xTaskCreate(&pk_encrypt, "PK", 1024*6, NULL, 5, NULL);
-
 }

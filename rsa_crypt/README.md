@@ -13,8 +13,8 @@ $ chmod 777 ./mkkey.sh
 $ ./mkkey.sh
 $ ls -l key
 total 8
--rw-rw-r-- 1 nop nop 1675 Mar  1 14:27 Private.Key
--rw-rw-r-- 1 nop nop  451 Mar  1 14:27 Public.Key
+-rw-rw-r-- 1 nop nop 1704 Mar 31 09:01 Private.pem
+-rw-rw-r-- 1 nop nop  451 Mar 31 09:01 Public.pem
 ```
 
 # Encryption using public key
