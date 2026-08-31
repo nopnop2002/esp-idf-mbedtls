@@ -1,4 +1,4 @@
-# PAS Asymmetric Encryption
+# PAS Asymmetric Encryption & Decryption
 
 This project will demonstrate how to use these functions.   
 
