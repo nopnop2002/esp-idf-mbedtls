@@ -12,8 +12,8 @@ ESP-IDF V5.x.
 __Changes from ESP-IDF V6__   
 In ESP-IDF V6, the mbedtls version has been updated from 3.x to 4.x, and PSA Crypto has become the primary cryptographic interface.   
 In mbedTLS 4.0, the Mbed TLS project has been split into two repositories:   
-- Mbed TLS: Provides TLS and X.509 functionality.   
-- TF-PSA-Crypto: Provides a standalone cryptography library, specifically including the PSA Cryptography API.   
+- Mbed TLS: provides TLS and X.509 functionality.   
+- TF-PSA-Crypto: provides the standalone cryptography library, notably including the PSA Cryptography API.   
 	TF-PSA-Crypto 1.0.0 removes APIs specific to certain block ciphers like aes.h, aria.h, camellia.h, des.h.   
 
 # Generate a key pair
