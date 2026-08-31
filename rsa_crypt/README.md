@@ -9,7 +9,7 @@ I referred [this](https://mbed-tls.readthedocs.io/en/latest/kb/how-to/encrypt-an
 # Software requirements
 ESP-IDF V5.x.   
 
-# Repository split
+__Changes from ESP-IDF V6__   
 In ESP-IDF V6, the mbedtls version has been updated from 3.x to 4.x, and PSA Crypto has become the primary cryptographic interface.   
 In mbedTLS 4.0, the Mbed TLS project has been split into two repositories:   
 - Mbed TLS: provides TLS and X.509 functionality.   
