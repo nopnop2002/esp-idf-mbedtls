@@ -17,6 +17,11 @@ I referred [this](https://tls.mbed.org/kb/how-to/encrypt-with-aes-cbc).
 |AES_CTR|Supported|Any|
 |AES_XTS|Supported|Any|
 
+# Software requirements
+ESP-IDF V5.x.   
+
+__Changes from ESP-IDF V6__   
+In ESP-IDF V6, the mbedtls version has been updated from 3.x to 4.x, and PSA Crypto has become the primary cryptographic interface.   
 In Mbed TLS v4.0, most legacy cryptography APIs have been removed and PSA Crypto is the primary interface.    
 Mbed TLS v4.0 requires the use of the PSA Crypto API according to [this](https://mbed-tls.readthedocs.io/en/latest/getting_started/psa/).
 
