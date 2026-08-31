@@ -6,6 +6,16 @@ You can also use ssh-keygen to generate the keys.
 Note that with RSA encryption, the size of the data before and after encryption will always be different.   
 I referred [this](https://mbed-tls.readthedocs.io/en/latest/kb/how-to/encrypt-and-decrypt-with-rsa/).   
 
+# Software requirements
+ESP-IDF V5.x.   
+
+___Changes from ESP-IDF V6___   
+In ESP-IDF V6, the mbedtls version has been updated from 3.x to 4.x, and PSA Crypto has become the primary cryptographic interface.   
+In mbedTLS 4.0, the Mbed TLS project has been split into two repositories:   
+- Mbed TLS: Provides TLS and X.509 functionality.   
+- TF-PSA-Crypto: Provides a standalone cryptography library, specifically including the PSA Cryptography API.   
+TF-PSA-Crypto 1.0.0 removes APIs specific to certain block ciphers like aes.h, aria.h, camellia.h, des.h.   
+
 # Generate a key pair
 A key pair consists of a private key (Private.pem) and a public key (Public.pem).   
 ```
