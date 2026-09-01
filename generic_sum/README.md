@@ -13,14 +13,30 @@ Mbed TLS v4.0 requires the use of the PSA Crypto API according to [this](https:/
 There is no equivalent to mbedtls_md_file in the PSA Crypto API.   
 Load the file data and calculate its hash.   
 
-# Available hash algorithms:
+# Hash algorithms available in ESP-IDF v5
 ```
-  SHA512
-  SHA384
-  SHA256
-  SHA224
-  SHA1
-  MD5
+SHA512
+SHA384
+SHA256
+SHA224
+SHA1
+MD5
+```
+
+# Hash algorithms available in ESP-IDF v6
+```
+SHA512
+SHA384
+SHA256
+SHA224
+SHA1
+MD5
+RIPEMD160
+SHA3-224
+SHA3-256
+SHA3-384
+SHA3-512
+
 ```
 
 # Using MD5
