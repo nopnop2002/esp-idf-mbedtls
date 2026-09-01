@@ -1,6 +1,6 @@
 # Generate a hash value from a file
 
-I ported from [here](https://github.com/Mbed-TLS/mbedtls/tree/v3.6.3/programs/hash).
+I used [this](https://github.com/Mbed-TLS/mbedtls/blob/v3.6.3/programs/hash/generic_sum.c) as a reference.   
 
 # Software requirements
 ESP-IDF V5.0 or later.   
