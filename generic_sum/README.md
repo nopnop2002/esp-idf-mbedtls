@@ -55,7 +55,7 @@ $ md5sum files/CMakeLists.txt
 # Using SHA1
 ```
 62a54b878741c6c8473daeb724d135d49b36af9e  /spiffs/Makefile
-050802476d9285ac04c5ecd3677d9bcd0775cc9b  /spiffs/CMakeLists.txt]
+050802476d9285ac04c5ecd3677d9bcd0775cc9b  /spiffs/CMakeLists.txt
 ```
 
 ```
