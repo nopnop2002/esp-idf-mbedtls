@@ -1,20 +1,8 @@
 /*
- *	generic message digest layer demonstration program
+ *  generic message digest layer demonstration program
  *
- *	Copyright The Mbed TLS Contributors
- *	SPDX-License-Identifier: Apache-2.0
- *
- *	Licensed under the Apache License, Version 2.0 (the "License"); you may
- *	not use this file except in compliance with the License.
- *	You may obtain a copy of the License at
- *
- *	http://www.apache.org/licenses/LICENSE-2.0
- *
- *	Unless required by applicable law or agreed to in writing, software
- *	distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *	See the License for the specific language governing permissions and
- *	limitations under the License.
+ *  Copyright The Mbed TLS Contributors
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
 #include <stdio.h>
@@ -43,14 +31,14 @@ static int generic_wrapper( mbedtls_md_type_t md_type, const mbedtls_md_info_t *
 	}
 
 
-	/* Initialize PSA Crypto */
+	// Initialize PSA Crypto
 	status = psa_crypto_init();
 	if (status != PSA_SUCCESS) {
 		printf("Failed to initialize PSA Crypto\n");
 		return 1;
 	}
 
-	/* Compute hash of message	*/
+	// Set up a multi-part hash operation
 	psa_hash_operation_t operation = PSA_HASH_OPERATION_INIT;
 	status = psa_hash_setup(&operation, alg);
 	if (status != PSA_SUCCESS) {
@@ -58,9 +46,11 @@ static int generic_wrapper( mbedtls_md_type_t md_type, const mbedtls_md_info_t *
 		return 2;
 	}
 
+	// Open file
 	FILE *fp = fopen(filename, "rb");
 	if (fp == NULL) return 10;
 
+	// Add a message fragment to a multi-part hash operation
 	unsigned char buffer[256];
 	size_t read_bytes;
 	while ((read_bytes = fread(buffer, 1, sizeof(buffer), fp)) > 0) {
@@ -73,8 +63,8 @@ static int generic_wrapper( mbedtls_md_type_t md_type, const mbedtls_md_info_t *
 
 	fclose(fp);
 
+	// Finish the calculation of the hash of a message
 	size_t actual_hash_len;
-	//status = psa_hash_finish(&operation, actual_hash, sizeof(actual_hash), &actual_hash_len);
 	status = psa_hash_finish(&operation, sum, lsum, &actual_hash_len);
 	if (status != PSA_SUCCESS) {
 		printf("Failed to finish hash operation\n");
@@ -87,9 +77,10 @@ static int generic_wrapper( mbedtls_md_type_t md_type, const mbedtls_md_info_t *
 	printf("\r\n");
 #endif
 
-	/* Clean up hash operation context */
+	// Clean up hash operation context
 	psa_hash_abort(&operation);
 
+	// Free the entropy context and associated resources
 	mbedtls_psa_crypto_free();
 
 	return 0;
@@ -98,6 +89,7 @@ static int generic_wrapper( mbedtls_md_type_t md_type, const mbedtls_md_info_t *
 #else
 static int generic_wrapper( mbedtls_md_type_t md_type, const mbedtls_md_info_t *md_info, char *filename, unsigned char *sum, int lsum )
 {
+	// Calculates the message-digest checksum result of the contents of the provided file
 	int ret = mbedtls_md_file( md_info, filename, sum );
 	if ( ret != 0 )
 		ESP_LOGE(TAG, "mbedtls_md_file fail %d", ret);
